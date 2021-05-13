@@ -1,3 +1,47 @@
+var deleteTask = function(taskId) {
+    console.log(taskId);
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+    taskSelected.remove();
+    console.log(taskSelected);
+    if (event.target.matches(".delete-btn")) {
+        var taskId = event.target.getAttribute("data-task-id");
+        deleteTask(taskId);
+    }
+};
+
+var editTask = function(taskId) {
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']")
+    var taskName = taskSelected.querySelector("h3.task-name").textContent;
+    var taskType = taskSelected.querySelector("span.task-type").textContent;
+    document.querySelector("input[name='task-name']").value = taskName;
+    document.querySelector("select[name='task-type']").value = taskType;
+    document.querySelector("#save-task").textContent = "Save Task";
+    formEl.setAttribute("data-task-id", taskId);
+}
+
+
+
+var pageContentEl = document.querySelector("#page-content");
+
+var taskButtonHandler = function(event) {
+    var targetEl = event.target;
+    if (targetEl.matches(".edit-btn")) {
+        var taskId = targetEl.getAttribute("data-task-id");
+        editTask(taskId);
+    }
+    else if (targetEl.matches(".delete-btn")) {
+        var taskId = targetEl.getAttribute("data-task-id");
+        deleteTask(taskId);
+    }
+};
+
+    if (event.target.matches(".delete-btn")) {
+        var taskId = event.target.getAttribute("data-task-id");
+        console.log(taskId);
+        console.log("you clicked a delete button!");
+    }
+pageContentEl.addEventListener("click", taskButtonHandler);
+
 var taskIdCounter = 0;
 
 
@@ -12,7 +56,7 @@ var taskFormHandler = function(event) {
 if (!taskNameInput || !taskTypeInput) {
     alert("You need to fill out the task form!");
     return false;
-}
+};
 
 formEl.reset();
 
@@ -26,7 +70,7 @@ formEl.reset();
 };
 
 var createTaskActions = function(taskId) {
-var action ContainerEl = document.createElement("div");
+var actionContainerEl = document.createElement("div");
 actionContainerEl.className = "task-actions";
 var editButtonEl = document.createElement("button");
 editButtonEl.textContent = "Edit";
@@ -53,7 +97,7 @@ for (var i = 0; i < statusChoices.length; i++) {
     statusOptionEl.setAttribute("value", statusChoices[i]);
 
     statusSelectEl.appendChild(statusOptionEl);
-}
+};
 
 actionContainerEl.appendChild(statusSelectEl);
 return actionContainerEl;
@@ -72,10 +116,10 @@ var createTaskEl = function(taskDataObj) {
 
     var taskActionsEl = createTaskActions(taskIdCounter);
     listItemEl.appendChild(taskActionsEl);
-        
+
     tasksToDoEl.appendChild(listItemEl);
 
     taskIdCounter++;
-}
+};
 
 formEl.addEventListener("submit", taskFormHandler);
